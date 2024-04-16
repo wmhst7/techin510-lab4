@@ -34,7 +34,6 @@ Data scraped from the web is stored in a PostgreSQL database. The database schem
 Ensure your PostgreSQL database is set up with the required books table. Use the following SQL command to create the table if it does not exist:
 
 ```sql
-Copy code
 CREATE TABLE books (
     id SERIAL PRIMARY KEY,
     title TEXT NOT NULL,
