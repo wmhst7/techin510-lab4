@@ -6,13 +6,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-
-# Connect to our database
 conn = psycopg2.connect(user=os.getenv("USERNAME"), password=os.getenv("PASSWORD"), host=os.getenv("HOSTNAME"), port=5432, database="postgres")
 cur = conn.cursor()
 
 
-# Function to fetch books based on user input
 def fetch_books(search_query, sort_by, sort_order):
     if sort_by == "rating":
         sort_clause = f"CASE rating WHEN 'One' THEN 1 WHEN 'Two' THEN 2 WHEN 'Three' THEN 3 WHEN 'Four' THEN 4 WHEN 'Five' THEN 5 END {sort_order}"
