@@ -18,7 +18,19 @@ Before you begin, ensure you have the following installed:
 - pip (Python package installer)
 
 
-#### Database Setup
+## User Guide
+- Search: Enter a keyword into the search bar to find books by title or description.
+- Sort: Select your sorting preference from the dropdown menus for both the sort category (rating or price) and the sort order (ascending or descending).
+- View Details: Click on the expander next to each book title to view detailed information about the book, such as the description and purchase URL.
+
+### Web screapper
+
+The web scraper is built using Python and makes use of the requests and BeautifulSoup libraries to extract book information from the target website. It navigates through pages, extracts details such as title, description, rating, and pricing, and prepares this data for storage.
+
+### Storage
+
+Data scraped from the web is stored in a PostgreSQL database. The database schema is designed to accommodate various book attributes including ratings, prices, and descriptions. This section ensures data integrity and provides a robust query interface.
+
 Ensure your PostgreSQL database is set up with the required books table. Use the following SQL command to create the table if it does not exist:
 
 ```sql
@@ -41,7 +53,6 @@ CREATE TABLE books (
 );
 ```
 
-## User Guide
-- Search: Enter a keyword into the search bar to find books by title or description.
-- Sort: Select your sorting preference from the dropdown menus for both the sort category (rating or price) and the sort order (ascending or descending).
-- View Details: Click on the expander next to each book title to view detailed information about the book, such as the description and purchase URL.
+### App
+
+The application layer is built using Streamlit, providing a user-friendly interface to interact with the data. It supports searching, filtering, and sorting functionalities, which enhance the user experience by making information retrieval straightforward and efficient.
