@@ -1,29 +1,27 @@
 import streamlit as st
 import psycopg2
 import pandas as pd
+import os
+from dotenv import load_dotenv
 
-# Function to connect to the database
-def connect_to_db():
-    conn = psycopg2.connect(
-        host="techin510wmh.postgres.database.azure.com",
-        dbname="postgres",
-        user="mhwu",
-        password="Wmh311@pos",
-        port=5432
-    )
-    return conn
+load_dotenv()
+
+
+# Connect to our database
+conn = psycopg2.connect(user=os.getenv("USERNAME"), password=os.getenv("PASSWORD"), host=os.getenv("HOSTNAME"), port=5432, database="postgres")
+cur = conn.cursor()
+
 
 # Function to fetch books based on user input
 def fetch_books(search_query, sort_by, sort_order):
-    conn = connect_to_db()
     if sort_by == "rating":
-        # If sorting by rating, convert text ratings to numbers
         sort_clause = f"CASE rating WHEN 'One' THEN 1 WHEN 'Two' THEN 2 WHEN 'Three' THEN 3 WHEN 'Four' THEN 4 WHEN 'Five' THEN 5 END {sort_order}"
     else:
         sort_clause = f"{sort_by} {sort_order}"
-    
+
     query = f"""
-    SELECT * FROM books
+    SELECT id, title, price, rating, url, description, availability
+    FROM books
     WHERE title ILIKE %s OR description ILIKE %s
     ORDER BY {sort_clause}
     """
@@ -31,7 +29,7 @@ def fetch_books(search_query, sort_by, sort_order):
     conn.close()
     return df
 
-# Streamlit user interface
+# Streamlit user interface with enhanced book display
 def main():
     st.title('Book Explorer')
     search_query = st.text_input('Search by book name or description')
@@ -43,7 +41,12 @@ def main():
         if results.empty:
             st.write("No results found.")
         else:
-            st.dataframe(results)
+            for index, row in results.iterrows():
+                with st.expander(f"**{row['title']}** | Rating: ({row['rating']}) | Price: {row['price']}"):
+                    st.markdown(f"**URL:** [Link]({row['url']})")
+                    st.markdown(f"**ID:** {row['id']}")
+                    st.markdown(f"**Avaliable** {row['availability']}")
+                    st.markdown(f"**Description:** {row['description']}")
 
 if __name__ == "__main__":
     main()
