@@ -42,6 +42,6 @@ CREATE TABLE books (
 ```
 
 ## User Guide
-Search: Enter a keyword into the search bar to find books by title or description.
-Sort: Select your sorting preference from the dropdown menus for both the sort category (rating or price) and the sort order (ascending or descending).
-View Details: Click on the expander next to each book title to view detailed information about the book, such as the description and purchase URL.
+- Search: Enter a keyword into the search bar to find books by title or description.
+- Sort: Select your sorting preference from the dropdown menus for both the sort category (rating or price) and the sort order (ascending or descending).
+- View Details: Click on the expander next to each book title to view detailed information about the book, such as the description and purchase URL.
